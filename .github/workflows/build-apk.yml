@@ -10,15 +10,18 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
-    timeout-minutes: 20
+    runs-on: macos-15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
 
       - name: Restore Android project
         run: |
           mkdir -p android
-          base64 -d vector-sector-project.b64 > /tmp/vector-sector.zip
+          python3 - <<'PY'
+          import base64, pathlib
+          pathlib.Path('/tmp/vector-sector.zip').write_bytes(base64.b64decode(pathlib.Path('vector-sector-project.b64').read_text()))
+          PY
           unzip -q /tmp/vector-sector.zip -d android
 
       - name: Set up JDK 17
