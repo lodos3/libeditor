@@ -1,0 +1,11 @@
+name: Runner Test
+on:
+  push:
+    paths:
+      - '.github/workflows/runner-test.yml'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo RUNNER_OK
